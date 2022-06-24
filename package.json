@@ -1,0 +1,28 @@
+{
+  "name": "video-with",
+  "version": "1.0.0",
+  "description": "Video sharing Service",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ldg-dgit/video-with.git"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/app.js"
+  },
+  "author": "LDG [hi-ldg@dgit.co]",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ldg-dgit/video-with/issues"
+  },
+  "homepage": "https://github.com/ldg-dgit/video-with#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.5",
+    "@babel/node": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "nodemon": "^2.0.16"
+  }
+}
