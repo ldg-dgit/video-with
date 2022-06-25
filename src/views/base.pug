@@ -5,17 +5,7 @@ html(lang="ko")
         title #{headTitle} - Video with
     body
         header
-            if user.signin
-                small Hello, #{user.username}
-            nav
-                ul
-                    if user.signin
-                        li
-                            a(href="/signout") Sign Out
-                    else 
-                        li 
-                            a(href="/signin") Sign In
             h1=bodyTitle
         main
             block body_content
-            include partials/footer.pug
+        include partials/footer
