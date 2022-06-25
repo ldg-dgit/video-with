@@ -8,6 +8,5 @@ const globalRouter = express.Router();
 globalRouter.get("/", trendingVideos);
 globalRouter.get("/signup", signup);
 globalRouter.get("/signin", signin);
-globalRouter.get("/search", search);
 
 export default globalRouter;

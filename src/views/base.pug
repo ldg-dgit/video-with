@@ -1,11 +1,14 @@
 doctype html
-html(lang="ko")
+html(lang="en")
     head
         link(rel="stylesheet" href="https://unpkg.com/mvp.css")
         title #{headTitle} - Video with
     body
         header
             h1=bodyTitle
+            nav 
+                ul 
+                    block nav
         main
             block body_content
         include partials/footer
