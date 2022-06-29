@@ -14,7 +14,7 @@ export const signupPost = async (req, res) => {
 };
 export const userEdit = (req, res) => res.send("Edit User");
 export const userDelete = (req, res) => res.send("Delete User");
-export const signin = (req, res) => res.render("Sign In");
+export const signin = (req, res) => res.render("signin");
 export const signout = (req, res) => res.send("Sign Out");
 export const userProfile = (req, res) => {
   return res.send(`User Profile @${req.params.id}`);
