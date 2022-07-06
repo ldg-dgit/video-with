@@ -12,9 +12,19 @@ html(lang="en")
                         a(href="/") Home
                     li 
                         a(href="/search") Search
-                    block nav
                     li 
-                        a(href="/signup") Sign Up
+                        a(href="/video/upload") Upload Video
+                    if signin 
+                        li 
+                            a(href="/my-profile") #{signinUser.name}'s Profile
+                        li 
+                            a(href="/signout") Sign Out
+                    else
+                        li 
+                            a(href="/signin") Sign In
+                        li 
+                            a(href="/signup") Sign Up
+                    block nav
         main
             block body_content
         include partials/footer

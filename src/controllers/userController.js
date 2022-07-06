@@ -45,6 +45,8 @@ export const signinPost = async (req, res) => {
   if (!exists) {
     return res.status(400).render("signin", { bodyTitle, headTitle, errorMessage: "Wrong password." });
   }
+  req.session.signin = true;
+  req.session.user = user;
   res.redirect("/");
 };
 export const userEdit = (req, res) => res.send("Edit User");
