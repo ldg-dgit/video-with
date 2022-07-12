@@ -1,6 +1,7 @@
 import express from "express";
 import session from "express-session";
 import morgan from "morgan";
+import MongoStore from "connect-mongo";
 import { localMiddleware } from "./middlewares";
 
 import rootRouter from "./routers/rootRouter";
@@ -18,9 +19,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: "H",
-    resave: true,
-    saveUninitialized: true,
+    secret: process.env.COOKIE_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
 
