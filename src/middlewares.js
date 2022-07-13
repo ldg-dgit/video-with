@@ -1,3 +1,5 @@
+import multer from "multer";
+
 export const localMiddleware = (req, res, next) => {
   res.locals.signin = Boolean(req.session.signin);
   res.locals.signinUser = req.session.user;
@@ -20,3 +22,5 @@ export const publicOnlyMiddleware = (req, res, next) => {
     return res.redirect("/user/my-profile");
   }
 };
+
+export const uploadFile = multer({ dest: "upload/" });

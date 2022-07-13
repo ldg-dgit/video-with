@@ -10,12 +10,12 @@ import {
   userEditPasswordGet,
   userEditPasswordPost,
 } from "../controllers/userController";
-import { protectorMiddleware, publicOnlyMiddleware } from "../middlewares.js";
+import { protectorMiddleware, publicOnlyMiddleware, uploadFile } from "../middlewares.js";
 
 const userRouter = express.Router();
 
 userRouter.get("/signout", protectorMiddleware, signout);
-userRouter.route("/edit").all(protectorMiddleware).get(userEditGet).post(userEditPost);
+userRouter.route("/edit").all(protectorMiddleware).get(userEditGet).post(uploadFile.single("profile_picture"), userEditPost);
 userRouter.route("/edit/password").all(protectorMiddleware).get(userEditPasswordGet).post(userEditPasswordPost);
 userRouter.get("/delete", userDelete);
 userRouter.get("/github/sign", publicOnlyMiddleware, signWithGithub);

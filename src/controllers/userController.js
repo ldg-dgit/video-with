@@ -104,7 +104,7 @@ export const githubCallback = async (req, res) => {
     if (!user) {
       user = await User.create({
         name: userData.name,
-        avatarUrl: userData.avatar_url,
+        profilePicturePath: userData.avatar_url,
         ssoOnly: true,
         githubId: userData.id,
         email: emailObj.email,
@@ -126,9 +126,10 @@ export const userEditGet = (req, res) => {
 export const userEditPost = async (req, res) => {
   const {
     session: {
-      user: { _id, email: pastEmail },
+      user: { _id, email: pastEmail, profilePicturePath },
     },
     body: { name, email, location },
+    file,
   } = req;
   /*
   Check Exist Email (Duplication Checker)
@@ -146,6 +147,7 @@ export const userEditPost = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
+      profilePicturePath: file ? file.path : profilePicturePath,
       name,
       email,
       location,
