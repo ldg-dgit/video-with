@@ -196,6 +196,15 @@ export const signout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
-export const userProfile = (req, res) => {
-  return res.send(`User Profile @${req.params.id}`);
+export const userProfile = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) {
+    return res.status(404).render("404", { bodyTitle: `User Not Found`, headTitle: `User Not Found` });
+  }
+  return res.render("user/profile", {
+    bodyTitle: `${user.name}'s Profile`,
+    headTitle: `${user.name}`,
+    user,
+  });
 };
