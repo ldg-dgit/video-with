@@ -1,6 +1,7 @@
 extends base.pug
 
 block body_content 
+    video(src="/" + video.videoPath, controls)
     div
         p=video.description
         small=video.createdAt 
