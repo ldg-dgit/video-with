@@ -12,13 +12,15 @@ html(lang="en")
                         a(href="/") Home
                     li 
                         a(href="/search") Search
-                    li 
-                        a(href="/video/upload") Upload Video
                     if signin 
                         li 
-                            a(href="/my-profile") #{signinUser.name}'s Profile
+                            a(href="/video/upload") Upload Video
+                        li
+                            a(href="/user/edit") Edit Profile
                         li 
                             a(href="/user/signout") Sign Out
+                        li 
+                            a(href="/my-profile") #{signinUser.name}'s Profile
                     else
                         li 
                             a(href="/signin") Sign In

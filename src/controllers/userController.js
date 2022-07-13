@@ -18,7 +18,6 @@ export const signupPost = async (req, res) => {
   try {
     await User.create({
       name,
-      username,
       email,
       password,
       location,
@@ -108,7 +107,6 @@ export const githubCallback = async (req, res) => {
         avatarUrl: userData.avatar_url,
         ssoOnly: true,
         githubId: userData.id,
-        username: userData.login,
         email: emailObj.email,
         password: "",
         location: userData.location,
@@ -122,7 +120,41 @@ export const githubCallback = async (req, res) => {
   }
 };
 
-export const userEdit = (req, res) => res.send("Edit User");
+export const userEditGet = (req, res) => {
+  return res.render("edit-profile", { bodyTitle: "Edit Profile", headTitle: "Edit Profile" });
+};
+export const userEditPost = async (req, res) => {
+  const {
+    session: {
+      user: { _id, email: pastEmail },
+    },
+    body: { name, email, location },
+  } = req;
+  /*
+  Check Exist Email (Duplication Checker)
+  if (email !== pastEmail) {
+    const checkEmail = await User.exists({ email });
+    if (checkEmail) {
+      return res.status(400).render("edit-profile", {
+        bodyTitle: "Edit Profile",
+        headTitle: "Edit Profile",
+        errorMessage: "This email is already taken",
+      });
+    }
+  }
+  */
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      location,
+    },
+    { new: true }
+  );
+  req.session.user = updatedUser;
+  return res.redirect("/user/edit");
+};
 export const userDelete = (req, res) => res.send("Delete User");
 export const signout = (req, res) => {
   req.session.destroy();
