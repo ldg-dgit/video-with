@@ -6,3 +6,6 @@ block body_content
         input(placeholder="Email", name="email", type="email", readonly=true, required, value=signinUser.email)
         input(placeholder="Location", name="location", type="text", required, value=signinUser.location)
         input(type="submit", value="Update Profile")
+        if !signinUser.ssoOnly
+            hr
+            a(href="/user/edit/password") Change Password &rarr;

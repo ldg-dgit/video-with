@@ -5,7 +5,7 @@ export const localMiddleware = (req, res, next) => {
   next();
 };
 
-export const protextorMiddleware = (req, res, next) => {
+export const protectorMiddleware = (req, res, next) => {
   if (req.session.signin) {
     next();
   } else {

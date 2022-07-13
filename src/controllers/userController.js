@@ -155,6 +155,40 @@ export const userEditPost = async (req, res) => {
   req.session.user = updatedUser;
   return res.redirect("/user/edit");
 };
+export const userEditPasswordGet = (req, res) => {
+  if (req.session.user.ssoOnly === true) {
+    return res.redirect("/");
+  }
+  return res.render("user/edit-password.pug", { bodyTitle: "Change User Password", headTitle: "Change User Password" });
+};
+export const userEditPasswordPost = async (req, res) => {
+  const {
+    session: {
+      user: { _id, password },
+    },
+    body: { oldPwd, newPwd, newPwdConf },
+  } = req;
+  const user = await User.findById(_id);
+  const ok = await bcrypt.compare(oldPwd, password);
+  if (!ok) {
+    return res.status(400).render("user/edit-password.pug", {
+      bodyTitle: "Change User Password",
+      headTitle: "Change User Password",
+      errorMessage: "The current password does not match.",
+    });
+  }
+  if (newPwd !== newPwdConf) {
+    return res.status(400).render("user/edit-password.pug", {
+      bodyTitle: "Change User Password",
+      headTitle: "Change User Password",
+      errorMessage: "The password does not match the confirmation",
+    });
+  }
+  user.password = newPassword;
+  await user.save();
+  req.session.user.password = user.password;
+  return redirect("/user/my-profile");
+};
 export const userDelete = (req, res) => res.send("Delete User");
 export const signout = (req, res) => {
   req.session.destroy();
