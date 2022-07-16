@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Video from "../models/Video.js";
 import fetch from "cross-fetch";
 import bcrypt from "bcrypt";
 
@@ -202,9 +203,11 @@ export const userProfile = async (req, res) => {
   if (!user) {
     return res.status(404).render("404", { bodyTitle: `User Not Found`, headTitle: `User Not Found` });
   }
+  const videos = await Video.find({ owner: user._id });
   return res.render("user/profile", {
     bodyTitle: `${user.name}'s Profile`,
     headTitle: `${user.name}`,
     user,
+    videos,
   });
 };

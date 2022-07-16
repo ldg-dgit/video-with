@@ -12,12 +12,11 @@ export const home = async (req, res) => {
 
 export const videoWatch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
-  const owner = await User.findById(video.owner);
+  const video = await Video.findById(id).populate("owner");
   if (!video) {
     return res.render("404", { bodyTitle: "404 - Not Found", headTitle: "404 - Not Found" });
   }
-  return res.render("video_watch", { headTitle: `${video.title}`, bodyTitle: `${video.title}`, video, owner });
+  return res.render("video_watch", { headTitle: `${video.title}`, bodyTitle: `${video.title}`, video });
 };
 
 export const videoEditGet = async (req, res) => {

@@ -1,4 +1,10 @@
 extends ../base
+include ../mixins/video.pug
 
 block body_content 
-    span hello 
+    each video in videos
+        +video(video)
+    else 
+        li Sorry, Nothing found...
+
+    
