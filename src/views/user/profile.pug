@@ -2,7 +2,7 @@ extends ../base
 include ../mixins/video.pug
 
 block body_content 
-    each video in videos
+    each video in user.videos
         +video(video)
     else 
         li Sorry, Nothing found...
