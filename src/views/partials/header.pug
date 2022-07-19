@@ -9,15 +9,18 @@ header
             if signin 
                 li 
                     a(href="/video/upload") Upload Video
-                li 
-                    a(href=`/user/${signinUser._id}`) #{signinUser.name}'s Profile
                 li
                     a(href="/user/edit") Edit Profile
                 li 
                     a(href="/user/signout") Sign Out
+                li
+                    a(href=`/user/${signinUser._id}`)
+                        if signinUser.profilePicturePath === ""
+                            span 🙃
+                        else
+                            img.header__avatar(src="/" + signinUser.profilePicturePath)
             else
                 li 
                     a(href="/signin") Sign In
                 li
                     a(href="/signup").header__btn  Sign Up
-    h2=bodyTitle
