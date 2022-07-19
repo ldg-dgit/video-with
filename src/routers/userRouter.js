@@ -9,7 +9,7 @@ import {
   githubCallback,
   userEditPasswordGet,
   userEditPasswordPost,
-} from "../controllers/userController";
+} from "../controllers/userController.js";
 import { protectorMiddleware, publicOnlyMiddleware, profilePictureUpload } from "../middlewares.js";
 
 const userRouter = express.Router();
