@@ -1,8 +1,7 @@
 extends base.pug
 
 block body_content
-    img(src="/" + signinUser.profilePicturePath, width="100")
-    form(method="POST", enctype="multipart/form-data")
+    form(method="POST", enctype="multipart/form-data").edit-profile__form
         label(for="proflie_picture") Profile Picture
         input(type="file", id="proflie_picture", name="profile_picture", accept="image/*")
         input(placeholder="Name", name="name", type="text", required, value=signinUser.name)
@@ -10,5 +9,5 @@ block body_content
         input(placeholder="Location", name="location", type="text", required, value=signinUser.location)
         input(type="submit", value="Update Profile")
         if !signinUser.ssoOnly
-            hr
-            a(href="/user/edit/password") Change Password &rarr;
+            div.edit-profile__password
+                a(href="/user/edit/password") Change Password &rarr;

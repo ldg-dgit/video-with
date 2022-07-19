@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find({}).sort({ createdAt: "desc" });
+    const videos = await Video.find({}).sort({ createdAt: "desc" }).populate("owner");
     return res.render("home", { bodyTitle: "Home", headTitle: "Home", videos });
   } catch {
     return res.render("server-error", { error });
@@ -106,7 +106,7 @@ export const search = async (req, res) => {
       title: {
         $regex: new RegExp(keyword, "i"),
       },
-    });
+    }).populate("owner");
   }
   return res.render("search", { headTitle: `Search`, bodyTitle: `Search`, videos });
 };

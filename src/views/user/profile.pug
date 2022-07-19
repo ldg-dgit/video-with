@@ -2,9 +2,11 @@ extends ../base
 include ../mixins/video.pug
 
 block body_content 
-    each video in user.videos
-        +video(video)
-    else 
-        li Sorry, Nothing found...
-
-    
+    div.profile__data
+        img(src="/" + user.profilePicturePath).avatar
+        h3=user.name
+    div.video-grid
+        each video in user.videos
+            +video(video)
+        else
+            span.empty__message No videos found

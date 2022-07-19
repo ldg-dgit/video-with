@@ -1,5 +1,4 @@
 import User from "../models/User.js";
-import Video from "../models/Video.js";
 import fetch from "cross-fetch";
 import bcrypt from "bcrypt";
 
@@ -199,7 +198,13 @@ export const signout = (req, res) => {
 };
 export const userProfile = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id).populate("videos");
+  const user = await User.findById(id).populate({
+    path: "videos",
+    populate: {
+      path: "owner",
+      model: "User",
+    },
+  });
   if (!user) {
     return res.status(404).render("404", { bodyTitle: `User Not Found`, headTitle: `User Not Found` });
   }
