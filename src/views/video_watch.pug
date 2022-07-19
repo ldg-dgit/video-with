@@ -2,16 +2,21 @@ extends base.pug
 
 block body_content 
     video(src="/" + video.videoPath, controls)
-    div
-        p=video.description
-        small=video.createdAt 
-        div
-        small Uploaded by 
-            a(href=`/user/${video.owner._id}`)=video.owner.name
-    
-    if signinUser
-        if String(video.owner._id) === String(signinUser._id)
-            br
-            a(href=`${video.id}/edit`) Edit Video &rarr;
-            div
-            a(href=`${video.id}/delete`) Delete Video &rarr; 
+
+        //-
+            div    
+                p=video.description
+                small=video.createdAt 
+                div
+                small Uploaded by 
+                    a(href=`/user/${video.owner._id}`)=video.owner.name
+            
+            if signinUser
+                if String(video.owner._id) === String(signinUser._id)
+                    br
+                    a(href=`${video.id}/edit`) Edit Video &rarr;
+                    div
+                    a(href=`${video.id}/delete`) Delete Video &rarr;
+
+block scripts
+    script(src="/static/js/videoPlayer.js")

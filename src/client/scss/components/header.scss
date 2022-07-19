@@ -4,8 +4,9 @@ header {
   justify-content: space-between;
   align-items: center;
   .header__logo {
-    color: $red;
-    font-size: 38px;
+    color: $green;
+    font-size: 27px;
+    font-weight: 600;
   }
   ul {
     display: flex;
