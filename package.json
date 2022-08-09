@@ -34,7 +34,8 @@
     "node-sass": "^7.0.1",
     "pug": "^3.0.2",
     "regenerator-runtime": "^0.13.9",
-    "style-loader": "^3.3.1"
+    "style-loader": "^3.3.1",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
