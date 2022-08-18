@@ -1,5 +1,6 @@
 import Video from "../models/Video.js";
 import User from "../models/User.js";
+import Comment from "../models/Comment.js";
 
 export const home = async (req, res) => {
   try {
@@ -12,7 +13,7 @@ export const home = async (req, res) => {
 
 export const videoWatch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id).populate("owner");
+  const video = await Video.findById(id).populate("owner").populate("comments");
   if (!video) {
     return res.render("404", { bodyTitle: "404 - Not Found", headTitle: "404 - Not Found" });
   }
@@ -138,4 +139,22 @@ export const viewCount = async (req, res) => {
   return res.sendStatus(200);
 };
 
-//test source : https://sample-videos.com/
+export const createComment = async (req, res) => {
+  const {
+    session: { user },
+    body: { text },
+    params: { id },
+  } = req;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  const comment = await Comment.create({
+    text,
+    owner: user._id,
+    video: id,
+  });
+  video.comments.push(comment._id);
+  video.save();
+  return res.sendStatus(201);
+};

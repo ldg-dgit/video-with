@@ -101,12 +101,13 @@ const handleMouseLeave = () => {
 
 const handleKeydown = (event) => {
   const { key } = event;
-  if (key === " ") {
-    event.preventDefault(); //화면 내려감 방지
-    handlePlayClick();
-  } else if (key === "f") {
-    handleFullScreen();
-  }
+  //댓글 중 저 키들이 안서지는 문제 때문에 Disable
+  //if (key === " ") {
+  //  event.preventDefault(); //화면 내려감 방지
+  //  handlePlayClick();
+  //} else if (key === "f") {
+  //  handleFullScreen();
+  //}
 };
 
 const handleEnded = async () => {
