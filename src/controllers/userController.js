@@ -2,7 +2,8 @@ import User from "../models/User.js";
 import fetch from "cross-fetch";
 import bcrypt from "bcrypt";
 
-export const signupGet = (req, res) => res.render("signup", { bodyTitle: "Sign Up", headTitle: "Sign Up" });
+export const signupGet = (req, res) =>
+  res.render("signup", { bodyTitle: "Sign Up", headTitle: "Sign Up" });
 export const signupPost = async (req, res) => {
   const headTitle = "Sign Up";
   const bodyTitle = "Sign Up";
@@ -10,10 +11,18 @@ export const signupPost = async (req, res) => {
   const { name, username, email, password, passwordConfirm, location } = req.body;
   const dupcheck = await User.exists({ $or: [{ username }, { email }] });
   if (password !== passwordConfirm) {
-    return res.status(400).render("signup", { bodyTitle, headTitle, errorMessage: "Password confirmation does not match." });
+    return res.status(400).render("signup", {
+      bodyTitle,
+      headTitle,
+      errorMessage: "Password confirmation does not match.",
+    });
   }
   if (dupcheck) {
-    return res.status(400).render("signup", { bodyTitle, headTitle, errorMessage: "This username/email is already taken." });
+    return res.status(400).render("signup", {
+      bodyTitle,
+      headTitle,
+      errorMessage: "This username/email is already taken.",
+    });
   }
   try {
     await User.create({
@@ -39,11 +48,17 @@ export const signinPost = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email, ssoOnly: false });
   if (!user) {
-    return res.status(400).render("signin", { bodyTitle, headTitle, errorMessage: "An account with this email does not exists." });
+    return res.status(400).render("signin", {
+      bodyTitle,
+      headTitle,
+      errorMessage: "An account with this email does not exists.",
+    });
   }
   const exists = await bcrypt.compare(password, user.password);
   if (!exists) {
-    return res.status(400).render("signin", { bodyTitle, headTitle, errorMessage: "Wrong password." });
+    return res
+      .status(400)
+      .render("signin", { bodyTitle, headTitle, errorMessage: "Wrong password." });
   }
   req.session.signin = true;
   req.session.user = user;
@@ -159,9 +174,13 @@ export const userEditPost = async (req, res) => {
 };
 export const userEditPasswordGet = (req, res) => {
   if (req.session.user.ssoOnly === true) {
+    req.flash("error", "Can't change password. (SSO account)");
     return res.redirect("/");
   }
-  return res.render("user/edit-password.pug", { bodyTitle: "Change User Password", headTitle: "Change User Password" });
+  return res.render("user/edit-password.pug", {
+    bodyTitle: "Change User Password",
+    headTitle: "Change User Password",
+  });
 };
 export const userEditPasswordPost = async (req, res) => {
   const {
@@ -188,11 +207,13 @@ export const userEditPasswordPost = async (req, res) => {
   }
   user.password = newPassword;
   await user.save();
+  req.flash("info", "Password updated");
   req.session.user.password = user.password;
   return redirect("/user/my-profile");
 };
 export const userDelete = (req, res) => res.send("Delete User");
 export const signout = (req, res) => {
+  req.flash("info", "Bye!!");
   req.session.destroy();
   return res.redirect("/");
 };
@@ -206,7 +227,9 @@ export const userProfile = async (req, res) => {
     },
   });
   if (!user) {
-    return res.status(404).render("404", { bodyTitle: `User Not Found`, headTitle: `User Not Found` });
+    return res
+      .status(404)
+      .render("404", { bodyTitle: `User Not Found`, headTitle: `User Not Found` });
   }
   return res.render("user/profile", {
     bodyTitle: `${user.name}'s Profile`,

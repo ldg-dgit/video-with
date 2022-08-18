@@ -16,7 +16,11 @@ export const videoWatch = async (req, res) => {
   if (!video) {
     return res.render("404", { bodyTitle: "404 - Not Found", headTitle: "404 - Not Found" });
   }
-  return res.render("video_watch", { headTitle: `${video.title}`, bodyTitle: `${video.title}`, video });
+  return res.render("video_watch", {
+    headTitle: `${video.title}`,
+    bodyTitle: `${video.title}`,
+    video,
+  });
 };
 
 export const videoEditGet = async (req, res) => {
@@ -26,12 +30,18 @@ export const videoEditGet = async (req, res) => {
   } = req.session;
   const video = await Video.findById(id);
   if (!video) {
-    return res.status(404).render("404", { bodyTitle: "404 - Not Found", headTitle: "404 - Not Found" });
+    return res
+      .status(404)
+      .render("404", { bodyTitle: "404 - Not Found", headTitle: "404 - Not Found" });
   }
   if (String(video.owner) !== String(_id)) {
     return res.status(403).redirect("/");
   }
-  return res.render("video_edit", { headTitle: `Edit - ${video.title}`, bodyTitle: `Edit - ${video.title}`, video });
+  return res.render("video_edit", {
+    headTitle: `Edit - ${video.title}`,
+    bodyTitle: `Edit - ${video.title}`,
+    video,
+  });
 };
 
 export const videoEditPost = async (req, res) => {
@@ -45,6 +55,7 @@ export const videoEditPost = async (req, res) => {
     return res.render("404", { bodyTitle: "404 - Not Found", headTitle: "404 - Not Found" });
   }
   if (String(video.owner) !== String(_id)) {
+    req.flash("error", "You are not the owner of the video.");
     return res.status(403).redirect("/");
   }
   await Video.findByIdAndUpdate(id, {
@@ -52,6 +63,7 @@ export const videoEditPost = async (req, res) => {
     description,
     hashtags: Video.formatHashtags(hashtags),
   });
+  req.flash("success", "Changes saved");
   return res.redirect(`/video/${id}`);
 };
 
@@ -78,7 +90,11 @@ export const videoUploadPost = async (req, res) => {
     user.save();
     return res.redirect("/");
   } catch (error) {
-    return res.status(400).render("upload", { headTitle: `Upload Video`, bodyTitle: `Upload Video`, errorMessage: error._message });
+    return res.status(400).render("upload", {
+      headTitle: `Upload Video`,
+      bodyTitle: `Upload Video`,
+      errorMessage: error._message,
+    });
   }
 };
 

@@ -1,3 +1,5 @@
+include mixins/message
+
 doctype html
 html(lang="en")
     head
@@ -5,6 +7,12 @@ html(lang="en")
         link(rel="stylesheet", href="/static/css/styles.css")
         title #{headTitle} - Video with
     body
+        if messages.error 
+            +message("info", messages.error)
+        if messages.info 
+            +message("error", messages.info)
+        if messages.success
+            +message("success", messages.success)
         include partials/header.pug
         main
             block body_content
