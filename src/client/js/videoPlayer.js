@@ -111,7 +111,7 @@ const handleKeydown = (event) => {
 
 const handleEnded = async () => {
   const { id } = videoContainer.dataset;
-  await fetch(`/api/video/${id}/view`, {
+  await fetch(`/api/video/${id}/view/end`, {
     method: "POST",
   });
 };
