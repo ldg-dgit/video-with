@@ -13,6 +13,8 @@ import apiRouter from "./routers/apiRouter.js";
 const app = express();
 const logger = morgan("dev");
 
+const { expressCspHeader, INLINE, NONE, SELF } = require("express-csp-header");
+
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 
