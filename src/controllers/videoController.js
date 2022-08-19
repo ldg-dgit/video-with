@@ -84,7 +84,7 @@ export const videoUploadPost = async (req, res) => {
       title,
       description,
       owner: _id,
-      video: isHeroku ? video.location : video.path,
+      video: video.location,
       hashtags: Video.formatHashtags(hashtags),
     });
     const user = await User.findById(_id);

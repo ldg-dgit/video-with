@@ -152,7 +152,7 @@ export const userEditPost = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
-      profilePicturePath: file ? (isHeroku ? file.location : file.path) : profilePicturePath,
+      profilePicturePath: file.location,
       name,
       email,
       location,
@@ -162,6 +162,7 @@ export const userEditPost = async (req, res) => {
   req.session.user = updatedUser;
   return res.redirect("/user/edit");
 };
+
 export const userEditPasswordGet = (req, res) => {
   if (req.session.user.ssoOnly === true) {
     req.flash("error", "Can't change password. (SSO account)");

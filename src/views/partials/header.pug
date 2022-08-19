@@ -19,9 +19,6 @@ header
                             span 🙃
                         else 
                             if signinUser.profilePicturePath
-                                if signinUser.profilePicturePath.includes("localhost")
-                                    img.header__avatar(src="/" + signinUser.profilePicturePath crossorigin)
-                                else
                                     img.header__avatar(src=signinUser.profilePicturePath crossorigin)
 
             else
