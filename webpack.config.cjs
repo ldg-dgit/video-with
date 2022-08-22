@@ -35,7 +35,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-        //역순으로 작동함
+        //역순으로 작동함.
       },
     ],
   },
