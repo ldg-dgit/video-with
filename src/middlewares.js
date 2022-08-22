@@ -9,9 +9,19 @@ const s3 = new aws.S3({
   },
 });
 
-const multerUploader = multerS3({
+const isHeroku = process.env.NODE_ENV === "production";
+
+const multerS3ImageUploader = multerS3({
   s3: s3,
-  bucket: "video-with",
+  bucket: "video-with/image",
+  Condition: {
+    StringEquals: { "s3:x-amz-acl": ["public-read"] },
+  },
+});
+
+const multerS3VideoUploader = multerS3({
+  s3: s3,
+  bucket: "video-with/video",
   Condition: {
     StringEquals: { "s3:x-amz-acl": ["public-read"] },
   },
@@ -20,7 +30,8 @@ const multerUploader = multerS3({
 export const localMiddleware = (req, res, next) => {
   res.locals.signin = Boolean(req.session.signin);
   res.locals.siteName = "Video with";
-  res.locals.signinUser = req.session.user;
+  res.locals.loggedInUser = req.session.user || {};
+  res.locals.isHeroku = isHeroku;
   next();
 };
 
@@ -45,10 +56,11 @@ export const publicOnlyMiddleware = (req, res, next) => {
 export const profilePictureUpload = multer({
   dest: "upload/profile_picture/",
   limits: { fileSize: 10000000 },
-  storage: multerUploader,
+  storage: isHeroku ? multerS3ImageUploader : undefined,
 });
+
 export const videoUpload = multer({
   dest: "upload/video/",
   limits: { fileSize: 50000000 },
-  storage: multerUploader,
+  storage: isHeroku ? multerS3VideoUploader : undefined,
 });

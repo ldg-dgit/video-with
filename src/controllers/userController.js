@@ -146,10 +146,11 @@ export const userEditPost = async (req, res) => {
     body: { name, email, location },
     file,
   } = req;
+  const isHeroku = process.env.NODE_ENV === "production";
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
-      profilePicturePath: file ? file.location : profilePicturePath,
+      profilePicturePath: file ? (isHeroku ? file.location : file.path) : profilePicturePath,
       name,
       email,
       location,

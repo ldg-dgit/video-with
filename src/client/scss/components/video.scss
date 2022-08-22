@@ -1,10 +1,17 @@
 // video mixins
 .video-mixin {
   .video-mixin__thumb {
+    background-color: ivory;
     height: 140px;
     border-radius: 7px;
     width: 100%;
-    background-color: ivory;
+    img {
+      height: 140px;
+      border-radius: 7px;
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
   }
   .video-mixin__data {
     padding: 0px 10px;
