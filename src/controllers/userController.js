@@ -235,5 +235,6 @@ export const userProfile = async (req, res) => {
     bodyTitle: `${user.name}'s Profile`,
     headTitle: `${user.name}`,
     user,
+    videos,
   });
 };
