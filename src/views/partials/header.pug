@@ -17,10 +17,12 @@ header
                     a(href=`/user/${signinUser._id}`)
                         if signinUser.profilePicturePath === ""
                             span 🙃
-                        else if signinUser.profilePicturePath.includes("github")
-                            img.header__avatar(src=signinUser.profilePicturePath)
                         else
-                            img.header__avatar(src="/" + signinUser.profilePicturePath)
+                            if signinUser.profilePicturePath
+                                if signinUser.profilePicturePath.includes("localhost")
+                                    img.header__avatar(src="/" + signinUser.profilePicturePath)
+                                else
+                                    img.header__avatar(src=signinUser.profilePicturePath)
 
             else
                 li 
