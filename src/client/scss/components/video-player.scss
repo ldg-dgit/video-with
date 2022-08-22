@@ -1,9 +1,13 @@
 #videoContainer {
   background-color: black;
   width: 100%;
+  max-width: 100vw;
+  max-height: 80vh;
   position: relative;
   video {
     width: 100%;
+    max-width: 100vw;
+    max-height: 80vh;
     &.full {
       align-items: center;
     }
