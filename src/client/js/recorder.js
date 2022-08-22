@@ -15,14 +15,36 @@ const handleDownload = async () => {
   await ffmpeg.load();
   ffmpeg.FS("writeFile", "recording.webm", await fetchFile(videoFile));
   await ffmpeg.run("-i", "recording.webm", "-r", "60", "output.mp4");
+  await ffmpeg.run("-i", "recording.webm", "-ss", "00:00:01", "-frames:v", "1", "thumbnail.png");
+
   const mp4File = ffmpeg.FS("readFile", "output.mp4");
+  const pngFile = ffmpeg.FS("readFile", "thumbnail.png");
+
   const mp4Blob = new Blob([mp4File.buffer], { type: "video/mp4" });
+  const pngBlob = new Blob([pngFile.buffer], { type: "image/png" });
+
   const mp4Url = URL.createObjectURL(mp4Blob);
-  const a = document.createElement("a");
-  a.href = mp4Url;
-  a.download = "My Recording.mp4";
-  document.body.appendChild(a);
-  a.click();
+  const pngUrl = URL.createObjectURL(pngBlob);
+
+  const mp4A = document.createElement("a");
+  mp4A.href = mp4Url;
+  mp4A.download = "recording.mp4";
+  document.body.appendChild(mp4A);
+  mp4A.click();
+
+  const pngA = document.createElement("a");
+  pngA.href = pngUrl;
+  pngA.download = "thumbnail.png";
+  document.body.appendChild(pngA);
+  pngA.click();
+
+  ffmpeg.FS("unlink", "recording.webm");
+  ffmpeg.FS("unlink", "output.mp4");
+  ffmpeg.FS("unlink", "thumbnail.png");
+
+  URL.revokeObjectURL(mp4Url);
+  URL.revokeObjectURL(pngUrl);
+  URL.revokeObjectURL(videoFile);
 };
 
 const handleStartRec = () => {
