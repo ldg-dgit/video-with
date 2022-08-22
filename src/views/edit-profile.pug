@@ -1,0 +1,13 @@
+extends base.pug
+
+block body_content
+    form(method="POST", enctype="multipart/form-data").edit-profile__form
+        label(for="proflie_picture") Profile Picture
+        input(type="file", id="proflie_picture", name="profile_picture", accept="image/*")
+        input(placeholder="Name", name="name", type="text", required, value=signinUser.name)
+        input(placeholder="Email", name="email", type="email", readonly=true, required, value=signinUser.email)
+        input(placeholder="Location", name="location", type="text", required, value=signinUser.location)
+        input(type="submit", value="Update Profile")
+        if !signinUser.ssoOnly
+            div.edit-profile__password
+                a(href="/user/edit/password") Change Password &rarr;

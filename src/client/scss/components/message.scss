@@ -1,0 +1,36 @@
+@keyframes goAway {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+
+.message {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 50%;
+  padding: 10px 20px;
+  border-radius: 50px;
+  text-align: center;
+  animation: goAway 0.5s ease-in-out forwards;
+  animation-delay: 5s;
+  &.error {
+    background-color: tomato;
+    color: white;
+  }
+  &.info {
+    background-color: greenyellow;
+    color: black;
+  }
+  &.success {
+    background-color: skyblue;
+    color: black;
+  }
+}
