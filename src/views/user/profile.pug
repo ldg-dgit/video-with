@@ -3,7 +3,7 @@ include ../mixins/video.pug
 
 block body_content 
     div.profile__data
-        img(src="/" + user.profilePicturePath).avatar
+        img(src=user.profilePicturePath crossorigin).avatar
         h3=user.name
     div.video-grid
         each video in user.videos

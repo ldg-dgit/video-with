@@ -141,28 +141,15 @@ export const userEditGet = (req, res) => {
 export const userEditPost = async (req, res) => {
   const {
     session: {
-      user: { _id, email: pastEmail, profilePicturePath },
+      user: { _id, profilePicturePath },
     },
     body: { name, email, location },
     file,
   } = req;
-  /*
-  Check Exist Email (Duplication Checker)
-  if (email !== pastEmail) {
-    const checkEmail = await User.exists({ email });
-    if (checkEmail) {
-      return res.status(400).render("edit-profile", {
-        bodyTitle: "Edit Profile",
-        headTitle: "Edit Profile",
-        errorMessage: "This email is already taken",
-      });
-    }
-  }
-  */
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
-      profilePicturePath: file ? file.path : profilePicturePath,
+      profilePicturePath: file ? file.location : profilePicturePath,
       name,
       email,
       location,
@@ -235,6 +222,5 @@ export const userProfile = async (req, res) => {
     bodyTitle: `${user.name}'s Profile`,
     headTitle: `${user.name}`,
     user,
-    videos,
   });
 };

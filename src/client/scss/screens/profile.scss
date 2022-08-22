@@ -6,9 +6,12 @@
   align-items: center;
   margin-bottom: 50px;
   img {
+    object-fit: cover;
     margin-bottom: 10px;
   }
   h3 {
-    font-size: 18px;
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: 500;
   }
 }
