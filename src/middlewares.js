@@ -30,7 +30,7 @@ const multerS3VideoUploader = multerS3({
 export const localMiddleware = (req, res, next) => {
   res.locals.signin = Boolean(req.session.signin);
   res.locals.siteName = "Video with";
-  res.locals.loggedInUser = req.session.user || {};
+  res.locals.signinUser = req.session.user || {};
   res.locals.isHeroku = isHeroku;
   next();
 };
